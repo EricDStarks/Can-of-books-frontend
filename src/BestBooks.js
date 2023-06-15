@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Carousel} from 'react-bootstrap';
-
+import image from './NWL.jpg'
 // class BestBooks extends React.Component {
 //   constructor(props) {
 //     super(props);
@@ -20,10 +20,10 @@ import {Carousel} from 'react-bootstrap';
   }, []);
   const fetchBooks = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/books');
+      const response = await axios.get('https://erics-can-of-books.onrender.com/books');
       setBooks(response.data);
     } catch (error) {
-      console.error('Books not found',error);
+      // console.error('Books not found',error);
     }
   }
 
@@ -42,66 +42,28 @@ import {Carousel} from 'react-bootstrap';
   } else {
     console.log("No books available");
   }
-
-
-  // render() 
-
-    /* TODO: render all the books in a Carousel */
+let noBooksHTML = <></>
+if (numberOfBooks == 0) {
+  noBooksHTML = <h1>No Books Available</h1>
+}
 
     return (
       <>
         <h2>Best Books</h2>
-        <ul>
-
-        {books.map((book) => (
-          <li key={book.id}>{book.title}</li>
-        ))};
-        </ul>
+        {noBooksHTML}
+      <Carousel>
+      {books.map((book) => (
+          <Carousel.Item key={book.id}>
+          <img src={image}></img>
+         <Carousel.Caption>{book.title}</Carousel.Caption>
+          </Carousel.Item>
+        ))}
+        
+      </Carousel>
+        
       </>
     )
   }
-
-  <div id="bookCarousel" class="carousel slide" data-ride="carousel">
-
-  {/* <indicators> */}
-  <ol class="carousel indicators">
-  <li data-target="#bookCarousel" data-slide="0" class="active"></li>
-  <li data-target="#bookCarousel" data-slide="1"></li>
-  <li data-target="#bookCarousel" data-slide="2"></li>
-  </ol>
-
-  {/* <wrapper for slides> */}
-  <div class="carousel inner">
-  <div class="carousel-item active"><img src="NWL.jpg" alt="Not Without Laughter"></img>
-  <div>
-    <h3>Not Without Laughter</h3>
-      <p>Harlem Renaissance</p>
-      <p>Fiction</p>
-  </div>
-  </div>
-  <div class="carousel-item active"><img src="SP.jpg" alt="Selected Poems"></img>
-  <div>
-  <h3>Selected Poems</h3>
-    <p>Books Of Poems</p>
-    <p>Non Fiction</p>
-  </div>
-  </div>
-  <div class="carousel-item active"><img src="TBS.jpg" alt="The Big Sea"></img>
-  <h3>The Big Sea</h3>
-    <p>Autobiographical</p>
-    <p>Non Fiction</p>
-  </div>
-
-  </div>
-  <a class="left carousel-control" href="#bookCarousel" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#bookCarousel" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <span class="sr-only">Next</span>
-  </a>
-  </div> 
 // }
 
 export default BestBooks;
