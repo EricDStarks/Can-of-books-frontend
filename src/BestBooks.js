@@ -2,6 +2,9 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {Carousel} from 'react-bootstrap';
 import image from './NWL.jpg'
+import {Button} from 'react-bootstrap'
+import BookModal from './BookModal';
+
 // class BestBooks extends React.Component {
 //   constructor(props) {
 //     super(props);
@@ -13,7 +16,7 @@ import image from './NWL.jpg'
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
   const BestBooks = () => {
     const [books, setBooks] = useState([]);
-
+    const [show, setShow] = useState(false)
     useEffect(() => {
       
       fetchBooks ();
@@ -46,10 +49,14 @@ let noBooksHTML = <></>
 if (numberOfBooks == 0) {
   noBooksHTML = <h1>No Books Available</h1>
 }
+const openModal = (BookModal) => {
+  
+};
+  
 
     return (
       <>
-        <h2>Best Books</h2>
+        <h2>Langston Hughes</h2>
         {noBooksHTML}
       <Carousel>
       {books.map((book) => (
@@ -60,7 +67,13 @@ if (numberOfBooks == 0) {
         ))}
         
       </Carousel>
-        
+
+      <Button onClick={function (){
+        setShow (true)
+      }}>
+            Add Book
+          </Button>
+        <BookModal show={show} setShow={setShow}/>
       </>
     )
   }
