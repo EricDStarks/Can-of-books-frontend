@@ -16,7 +16,8 @@ import BookModal from './BookModal';
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
   const BestBooks = () => {
     const [books, setBooks] = useState([]);
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    
     useEffect(() => {
       
       fetchBooks ();
@@ -29,6 +30,10 @@ import BookModal from './BookModal';
       // console.error('Books not found',error);
     }
   }
+
+    const updateBookList = (newBook) => {
+      setBooks((prevBooks) => [...prevBooks, newBook]);
+    };
 
   //Defining a state variable to store book data
   let bookState = null;
@@ -52,7 +57,6 @@ if (numberOfBooks == 0) {
 const openModal = (BookModal) => {
   
 };
-  
 
     return (
       <>
@@ -61,7 +65,8 @@ const openModal = (BookModal) => {
       <Carousel>
       {books.map((book) => (
           <Carousel.Item key={book.id}>
-          <img src={image}></img>
+          <img src="https://innovating.capital/wp-content/uploads/2021/05/placeholder-image-dark.jpg"
+></img>
          <Carousel.Caption>{book.title}</Carousel.Caption>
           </Carousel.Item>
         ))}
