@@ -4,6 +4,7 @@ import {Carousel} from 'react-bootstrap';
 import image from './NWL.jpg'
 import {Button} from 'react-bootstrap'
 import BookModal from './BookModal';
+import EditModal from './EditModal';
 
 // class BestBooks extends React.Component {
 //   constructor(props) {
@@ -17,6 +18,8 @@ import BookModal from './BookModal';
   const BestBooks = () => {
     const [books, setBooks] = useState([]);
     const [show, setShow] = useState(false);
+    const [showUpdate, setShowUpdate] = useState(false);
+    const [id, setId] = useState("");
     
     useEffect(() => {
       
@@ -31,6 +34,14 @@ import BookModal from './BookModal';
     }
   }
 
+  const deleteBook = async (e) => {
+    try {
+      console.log("goooo")
+      const response = await axios.delete(`https://erics-can-of-books.onrender.com/books/${id}`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
     const updateBookList = (newBook) => {
       setBooks((prevBooks) => [...prevBooks, newBook]);
     };
@@ -67,7 +78,24 @@ const openModal = (BookModal) => {
           <Carousel.Item key={book.id}>
           <img src="https://innovating.capital/wp-content/uploads/2021/05/placeholder-image-dark.jpg"
 ></img>
-         <Carousel.Caption>{book.title}</Carousel.Caption>
+          
+         <Carousel.Caption>
+         <h3>{book.title}</h3>
+         <p>{book.description}</p>
+         <p>{book.status}</p>
+         
+         <p>{book._id}</p>
+         <Button variant="secondary" onClick={function (e){
+          console.log("WORKS")
+          e.preventDefault()
+          setShowUpdate(true)
+          setId(book._id)
+         }}>Edit</Button>
+          <Button variant="danger" onClick={function (e){
+            deleteBook();
+            setId(book._id)
+          }}>Delete Book</Button>
+         </Carousel.Caption>
           </Carousel.Item>
         ))}
         
@@ -79,9 +107,10 @@ const openModal = (BookModal) => {
             Add Book
           </Button>
         <BookModal show={show} setShow={setShow}/>
+        <EditModal id={id} showUpdate={showUpdate} setShowUpdate={setShowUpdate}/>
       </>
     )
   }
-// }
+
 
 export default BestBooks;
